@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns:hx="http://www.w3.org/1999/xhtml">
+<head>
+    <title>PAAS - Palidromes as a service</title>
+    <style>
+        body {
+            background-color: #eee;
+        }
+
+        .card {
+            border: #333;
+            border-radius: 4px;
+            width: 200px;
+            min-height: 200px;
+            box-shadow: 3px 3px 5px #000;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .card .palindrome {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+    <script src="https://unpkg.com/htmx.org@1.8.0"></script>
+</head>
+<body>
+<h1>PAAS : Palindromes as a Service</h1>
+<div style="display: flex; flex-direction: row; gap: 20px;">
+    <div class="card" th:fragment="randomPalindrome" id="randomPalindromeCard" hx-swap="outerHTML" hx-target="#randomPalindromeCard">
+        <h2>Random Palindrome</h2>
+        <div class="palindrome" th:text="${p.text}">racecar</div>
+        <div>
+            <a style="cursor: pointer; color: blue;" hx-get="/palindromes/random" >See another random palindrome</a><br>
+            <a style="cursor: pointer; color: blue;" th:text="${p.votes}" hx:post="'/palindromes/vote/'+${p.normalized}"  title="Vote up!">10</a>
+        </div>
+
+    </div>
+
+    <div class="card" th:fragment="topPalindromes" id="topPalindromes" hx-swap="outerHTML" hx-target="#topPalindromes">
+        <h2>Top palindromes</h2>
+        <ul hx-get="/palindromes/top" hx-trigger="every 5s">
+            <li th:each="pal : ${topPalindromes}">
+                <span  th:text="${pal.text}">mom</span> (<span th:text="${pal.votes}"></span>)
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" th:fragment="addForm" id="addFormCard">
+        <h2>Add a palindrome</h2>
+        <div th:text="${addMessage}"></div>
+
+        <form hx-post="/palindromes" hx-target="#addFormCard" hx-swap="outerHTML">
+            <div>
+                <label for="palindromeText">Text:</label>
+                <input id="palindromeText" name="palindromeText" />
+            </div>
+            <div>
+                <label for="submitter">Submitter:</label>
+                <input id="submitter" name="submitter" />
+            </div>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,5 @@
+palindrome:
+  url: http://localhost:8078
+  username: user
+  password: password
+

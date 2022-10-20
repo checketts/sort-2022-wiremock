@@ -1,0 +1,18 @@
+spring:
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
+
+
+palindrome:
+  url: http://localhost:8081
+  username: user
+  password: password
+
+logging:
+  # Customize the default file and log patterns to use an ISO-8601 date format
+  level:
+    org: INFO
+    org.springframework.security: DEBUG
